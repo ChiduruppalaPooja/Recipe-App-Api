@@ -43,3 +43,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
+class Category(models.Model):
+    """categories table model"""
+    category_id = models.AutoField(primary_key=True)
+    category_name = models.CharField(max_length=255)
+    category_name_id = models.IntegerField(unique=True, null=False)
+    category_image_url = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'categories'
+
+
+
