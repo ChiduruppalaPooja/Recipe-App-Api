@@ -1,20 +1,19 @@
-"""View for Category"""
+"""View for items"""
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from core.models import (
-    Category,
     Item,
+    Category
 )
+from items import serializers
+from categories.serializers import CategorySerializer
 
-from categories import serializers
-from items.serializers import ItemSerializer
 
-
-class CategoryViewSet(viewsets.ModelViewSet):
-    """View for managing categories"""
-    serializer_class = serializers.CategorySerializer
-    queryset = Category.objects.all().order_by('category_id')
+class ItemsViewSet(viewsets.ModelViewSet):
+    """View for managing items"""
+    serializer_class = serializers.ItemSerializer
+    queryset = Item.objects.all().order_by('item_id')
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
@@ -46,14 +45,12 @@ class CategoryViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        items = Item.objects.filter(categories=instance)
-        item_serializer = ItemSerializer(items, many=True)
+        categories = Category.objects.filter(items=instance)
+        category_serializer = CategorySerializer(categories, many=True)
         return Response({
-                'category': serializer.data,
-                'items': item_serializer.data
+                'items': serializer.data,
+                'category': category_serializer.data
         })
-

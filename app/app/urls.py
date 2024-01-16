@@ -21,15 +21,16 @@ from drf_spectacular.views import (
 )
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
     path(
         'api/docs/',
-        SpectacularSwaggerView.as_view(url_name='api-schema'),  #for thr GUI
+        SpectacularSwaggerView.as_view(url_name='api-schema'),  # for thr GUI
         name='api-docs',
     ),
     path('api/user/', include('user.urls')),
-    path('api/v1/', include('categories.urls')), 
+    path('api/categories/v1/', include('categories.urls')),
+    path('api/items/v1/', include('items.urls')),
+
 ]

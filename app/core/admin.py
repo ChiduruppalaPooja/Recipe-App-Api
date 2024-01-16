@@ -10,10 +10,10 @@ from core import models
 
 class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users."""
-    ordering = ['id']  #comes with base user
+    ordering = ['id']  # comes with base user
     list_display = ['email', 'name']
     fieldsets = (
-        (None, {'fields': ('email', 'password')}), #each () gives a section
+        (None, {'fields': ('email', 'password')}),  # each () gives a section
         (_('Personal Info'), {'fields': ('name',)}),
         (
             _('Permissions'),
@@ -30,7 +30,8 @@ class UserAdmin(BaseUserAdmin):
     readonly_fields = ['last_login']
     add_fieldsets = (
         (None, {
-            'classes': ('wide',),  #a css thing to add property of wide, just for looks
+            # a css thing to add property of wide, just for looks
+            'classes': ('wide',),
             'fields': (
                 'email',
                 'password1',
@@ -45,3 +46,4 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(models.User, UserAdmin)
+admin.site.register(models.Category)
